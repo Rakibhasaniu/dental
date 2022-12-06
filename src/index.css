@@ -15,3 +15,46 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.navsbottom {
+  border-bottom: 1px solid #8391AD;
+}
+
+.Card-shadow {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.Card-shadow:hover {
+  box-shadow: #0505059c 0px 25px 40px 4px;
+
+}
+
+.img-gradent {
+  background: linear-gradient(to bottom, #008694f2 0%, rgba(255, 255, 255, 0.288) 100%) !important;
+}
+
+.li {
+  background-color: unset !important;
+}
+
+.li a {
+  font-weight: 700;
+  color: #525d73;
+  background-color: unset !important;
+
+}
+
+.li a:hover {
+  background-color: unset !important;
+  color: rgb(4, 150, 190);
+
+}
+
+.text {
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.img-border {
+  border: 3px solid rgb(29, 118, 177);
+}

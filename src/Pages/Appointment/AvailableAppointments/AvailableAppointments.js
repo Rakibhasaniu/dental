@@ -1,18 +1,28 @@
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import Loding from '../../Shared/Loding/Loding';
 import BookingModal from '../BookingModal/BookingModal';
 import AppointmentOption from './AppointmentOption';
 
 const AvailableAppointments = ({ selectedDate }) => {
-    const [appointmentOptions, setAppointmentOptions] = useState([]);
+
     const [treatment, setTreatment] = useState(null);
+    const date = format(selectedDate, 'PP');
+    // TranStack query
+    const { data: appointmentOptions = [], refetch, isLoading } = useQuery({
+        queryKey: ['appointmentOptions', date],
+        queryFn: async () => {
+            const res = await fetch(`https://doctors-portal-server-site-zeta.vercel.app/v2/appointmentLinst?date=${date}`);
+            const data = await res.json();
+            return data;
+        }
+    })
 
-    useEffect(() => {
-        fetch('appointmentOptions.json')
-            .then(res => res.json())
-            .then(data => setAppointmentOptions(data))
-    }, [])
-
+    if (isLoading) {
+        return <Loding></Loding>
+    }
+    // console.log(date)
     return (
         <section className='my-16'>
             <p className='text-center text-secondary font-bold'>Available Appointments on {format(selectedDate, 'PP')}</p>
@@ -21,6 +31,7 @@ const AvailableAppointments = ({ selectedDate }) => {
                     appointmentOptions.map(option => <AppointmentOption
                         key={option._id}
                         appointmentOption={option}
+
                         setTreatment={setTreatment}
                     ></AppointmentOption>)
                 }
@@ -30,6 +41,7 @@ const AvailableAppointments = ({ selectedDate }) => {
                 <BookingModal
                     selectedDate={selectedDate}
                     treatment={treatment}
+                    refetch={refetch}
                     setTreatment={setTreatment}
                 ></BookingModal>
             }
