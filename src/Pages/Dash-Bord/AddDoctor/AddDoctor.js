@@ -28,7 +28,7 @@ const AddDoctor = () => {
         const image = data.image[0];
         const formData = new FormData();
         formData.append('image', image);
-        const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}` //https://api.imgbb.com/1/upload?key
+        const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}` //https://api.imgbb.com/1/upload?key
         fetch(url, {
             method: 'POST',
             body: formData
@@ -111,7 +111,7 @@ const AddDoctor = () => {
                             })} className="input input-bordered w-full max-w-xs" />
                             {errors.img && <p className='text-red-500'>{errors.img.message}</p>}
                         </div>
-                        <input className='btn btn-accent w-full mt-4' value="Add Doctor" type="submit" />
+                        <input className='btn btn-accent w-full mt-4 bg-green-700 hover:bg-green-600' value="Add Doctor" type="submit" />
                     </form>
                 </div>
             </div>

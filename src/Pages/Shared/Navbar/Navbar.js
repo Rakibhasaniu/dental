@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../../AuthContext/UserContext';
+import Logo from '../../../assets/images/dental logo.png'
 
 const Navbar = () => {
 
@@ -33,26 +34,29 @@ const Navbar = () => {
     }
 
     const menuItems = <React.Fragment>
-        <li className='li'><Link to="/">Home</Link></li>
-        <li className='li'><Link to="/appointment">Appointment</Link></li>
-        <li className='li'><Link to="/allDoctior">All Doctors</Link></li>
+
         {
-            userss?.email && userss?.role === "admin" ?
-                <>
-                    <li className='li'><Link to="/dasbord">Dashbord</Link></li>
-                </>
-                :
-                <>
-
-                    <li className='li'><Link to="/userBooking">User Booking Lisht</Link></li>
-                </>
-
-
+            userss?.role === "admin" &&
+            <>
+                <li className='li'><Link to="/">Home</Link></li>
+                <li className='li'><Link to="/appointment">Appointment</Link></li>
+                <li className='li'><Link to="/allDoctior">All Doctors</Link></li>
+                <li className='li'><Link to="/dasbord">Dashbord</Link></li>
+            </>
+        }
+        {
+            userss?.role !== "admin" &&
+            <>
+                <li className='li'><Link to="/">Home</Link></li>
+                <li className='li'><Link to="/appointment">Appointment</Link></li>
+                <li className='li'><Link to="/allDoctior">All Doctors</Link></li>
+                <li className='li'><Link to="/userBooking">User Booking Lisht</Link></li>
+            </>
 
         }
 
-        {/* <li className='li'><Link to="/about">About</Link></li> */}
-
+        <li className='li'><Link to="/about">About us</Link></li>
+        {/* <img align='right' width='400' src="" /> */}
         {
             user?.uid ?
                 <li className='li'><Link onClick={LogOut} to="/login">Log Out</Link></li>
@@ -77,7 +81,7 @@ const Navbar = () => {
                         {menuItems}
                     </ul>
                 </div>
-                <Link to="/" className="normal-case text-xl text-[#0fbeca] text-bold text">DENTAL TRETMENT</Link>
+                <Link to="/" className="flex "><div className="w-[60px] overflow-hidden"><img className='w-[100%]' src={Logo} alt="" /></div><h1 className='mt-[34px] ml-0 text-[12px] font-extrabold text-[#3A4255]'>CLINIC</h1> </Link>
             </div>
             <div className="navbar-center hidden lg:flex mr-10">
                 <ul className="menu menu-horizontal p-0">

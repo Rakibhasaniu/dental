@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FaRegWindowClose } from 'react-icons/fa';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext/UserContext';
+import 'react-photo-view/dist/react-photo-view.css';
 
 function App() {
 

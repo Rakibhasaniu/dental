@@ -54,10 +54,16 @@ const Login = () => {
     //reste password email notification 
     const restePasswords = () => {
         console.log('forget password', userEmail);
-        forGetPass(userEmail)
-            .then(() => {
-                toast.success("please chack you email or set password .")
-            }).catch(err => toast.error(err))
+        if (userEmail) {
+            forGetPass(userEmail)
+                .then(() => {
+                    toast.success("please chack you email or setup password .")
+                }).catch(err => {
+                    toast.error("Your email doesn't Match !")
+                })
+        } else {
+            toast.warn("please write your currect email")
+        }
     }
 
 

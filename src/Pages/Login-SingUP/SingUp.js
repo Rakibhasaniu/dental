@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -13,8 +13,9 @@ const SingUp = () => {
     const navigat = useNavigate()
     const location = useLocation()
     const prevLocation = location?.state?.from?.pathname || '/';
-
-
+    // ---image bb key--
+    const imageHostKey = process.env.REACT_APP_imgbb_key;
+    // const [userImage, setImage] = useState();
 
 
     // dirtyFields 
@@ -31,48 +32,96 @@ const SingUp = () => {
         navigat(prevLocation, { replace: true })
     }
 
+
+
     // ----frome input fild handel btn------------
     const handlelogin = data => {
 
-        // console.log(data);
-        const { email, name, password, img } = data;
+        const { email, name, password } = data;
+        // ----set image bb url----
+        const images = data.img[0];
+        const formData = new FormData();
+        formData.append('image', images);
+        const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}` //https://api.imgbb.com/1/upload?key
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(imageData => {
+                if (imageData?.success) {
+                    console.log("url", imageData?.data?.display_url);
+                    const userImage = imageData?.data?.display_url;
+                    console.log(userImage)
+                    singUpUser(email, password)
+                        .then(result => {
+                            console.log(result?.user);
+                            toast.success('Registration successfully')
 
+                            userProfile(name, userImage)
+                                .then(result => {
+                                    console.log('updat', userImage);
+                                    toast.info('update user profile')
+
+                                    emailVerification()
+                                        .then(result => {
+                                            toast.success('send email verifiy link to visite')
+                                            // ---navigate
+                                            userInformation(name, userImage, email)
+                                        }).catch(err => {
+                                            toast.error(err.message)
+                                            console.log(err)
+                                        })
+
+                                }).catch(err => {
+                                    toast.error(err.message)
+                                    console.log(err)
+                                })
+                        }).catch(err => {
+                            toast.error(err.message)
+                            console.log(err)
+                        })
+                }
+            })
 
         //user create email or password sing up
-        singUpUser(email, password)
-            .then(result => {
-                console.log(result?.user);
-                toast.success('Registration successfully')
 
-                userProfile(name, img)
-                    .then(result => {
+        // singUpUser(email, password)
+        //     .then(result => {
+        //         console.log(result?.user);
+        //         toast.success('Registration successfully')
 
-                        toast.info('update user profile')
+        //         userProfile(name, userImage)
+        //             .then(result => {
+        //                 console.log('updat', userImage);
+        //                 toast.info('update user profile')
 
-                        emailVerification()
-                            .then(result => {
-                                toast.success('send email verifiy link to visite')
-                                // ---navigate
-                                userInformation(name, img, email)
-                            }).catch(err => {
-                                toast.error(err.message)
-                                console.log(err)
-                            })
+        //                 emailVerification()
+        //                     .then(result => {
+        //                         toast.success('send email verifiy link to visite')
+        //                         // ---navigate
+        //                         userInformation(name, userImage, email)
+        //                     }).catch(err => {
+        //                         toast.error(err.message)
+        //                         console.log(err)
+        //                     })
 
-                    }).catch(err => {
-                        toast.error(err.message)
-                        console.log(err)
-                    })
-            }).catch(err => {
-                toast.error(err.message)
-                console.log(err)
-            })
+        //             }).catch(err => {
+        //                 toast.error(err.message)
+        //                 console.log(err)
+        //             })
+        //     }).catch(err => {
+        //         toast.error(err.message)
+        //         console.log(err)
+        //     })
 
 
     }
+
+
     // MongoDb set user information
-    const userInformation = (name, img, email) => {
-        const user = { name, img, email };
+    const userInformation = (name, userImage, email) => {
+        const user = { name, userImage, email };
         fetch(`https://doctors-portal-server-site-zeta.vercel.app/users`, {
             method: 'POST',
             headers: {
@@ -99,7 +148,7 @@ const SingUp = () => {
     }
 
 
-    //Get fetch JWT token access
+    // Get fetch JWT token access
     // const getJwtToken = email => {
     //     fetch(`https://doctors-portal-server-site-zeta.vercel.app/jwt?email=${email}`)
     //         .then(res => res.json())
@@ -139,18 +188,21 @@ const SingUp = () => {
                         </div>
                         {/* -----img uplode------ */}
 
+
                         <div className="block">
                             <label className="label">
-                                <span className="label-text text-slate-500">Use image</span>
+                                <span className="label-text text-slate-500">User image</span>
                             </label>
 
-                            <input type='img' placeholder=' User image'
-                                {...register("img",
-                                    {
-                                        required: "your profile image",
-                                    }
-                                )}
-                                className="input input-bordered w-full" />
+                            <div className="flex justify-center items-center w-[90%] h-12 bg-[#fff] imag_uplode md:text-white">
+                                <input type='file'
+                                    {...register("img",
+                                        {
+                                            required: "your profile image",
+                                        }
+                                    )}
+                                    className="p-5 imag_uplode" />
+                            </div>
                             {/* ------error email message------ */}
                             {errors.img && <p role="alert" className='mt-2 ml-1 text-[#ef1010] text-bold text-[13px] '>
                                 <span className='text-[12px] mr-1'>❌</span>

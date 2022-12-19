@@ -37,7 +37,7 @@ const ManageDoctors = () => {
     return (
         <>
             <section className='mt-20 '>
-                <div className="grid md:grid-cols-3 md:px-10 gap-2 ">
+                <div className="grid md:grid-cols-3 md:px-10 gap-2 h-[auto]">
                     {
                         doctors?.map((doctor) => <DoctorCard doctor={doctor} key={doctor?._id} refetch={refetch} ></DoctorCard>)
                     }

@@ -5,8 +5,8 @@ import PrimaryButton from '../../../components/PrimaryButton/PrimaryButton';
 
 const Banner = () => {
     return (
-        <div className="hero py-10 mt-10">
-            <div className="hero-content flex-col lg:flex-row-reverse">
+        <div className="hero py-10 mt-10 h-[85vh]">
+            <div className="hero-content md:justify-between flex-col lg:flex-row-reverse">
                 <img src={chair} className="rounded-lg lg:w-1/2 shadow-2xl" alt='' />
                 <div>
                     <h1 className="text-3xl md:text-5xl font-bold">Your New Smile Starts Here</h1>

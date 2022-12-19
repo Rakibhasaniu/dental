@@ -30,6 +30,7 @@ const UserContext = ({ children }) => {
     //user information name image etc
     const userProfile = (name, image) => {
         setLoding(true);
+        console.log("privet", image)
         return updateProfile(auth?.currentUser, { displayName: name, photoURL: image });
     }
     // Log out user 

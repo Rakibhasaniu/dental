@@ -22,7 +22,7 @@ const DoctorCard = ({ doctor, refetch }) => {
 
     return (
         <>
-            <div className="card w-96 bg-base-100 shadow-xl image-full">
+            <div className="card w-96 h-[80vh] bg-base-100 shadow-xl image-full">
                 <figure><img className='opacity-95' src={doctor?.image} alt="Shoes" /></figure>
                 <div className="card-body ">
                     <h1 onClick={() => handleDeleteDoctor(doctor)} className='text-3xl absolute top-2 right-5 cursor-pointer hover:text-red-700'>x</h1>

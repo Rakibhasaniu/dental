@@ -1,0 +1,12 @@
+.about {
+    background-image: url('https://www.gif.org.il/images/gif-dots.svg');
+    width: 100% !important;
+    height: 90vh !important;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.insideAbout {
+    background-color: rgb(255, 255, 255);
+}
