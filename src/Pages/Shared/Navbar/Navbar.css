@@ -1,0 +1,10 @@
+.navbar {
+    background-color: #a8a5be !important;
+    position: fixed !important;
+    top: 0;
+    z-index: 4000 !important;
+    /* width: 100% !important; */
+    color: #e3a300;
+    /* padding: 10px 2px !important; */
+    
+}
